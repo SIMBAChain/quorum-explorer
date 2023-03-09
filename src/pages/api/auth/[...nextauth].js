@@ -5,6 +5,15 @@ import GithubProvider from "next-auth/providers/github";
 import TwitterProvider from "next-auth/providers/twitter";
 import Auth0Provider from "next-auth/providers/auth0";
 import CredentialsProvider from "next-auth/providers/credentials";
+import AzureADProvider from "next-auth/providers/azure-ad";
+import SlackProvider from "next-auth/providers/slack";
+import OktaProvider from "next-auth/providers/okta";
+import CognitoProvider from "next-auth/providers/cognito";
+import AtlassianProvider from "next-auth/providers/atlassian";
+import GitlabProvider from "next-auth/providers/gitlab";
+import KeycloakProvider from "next-auth/providers/keycloak";
+
+
 
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers/oauth
@@ -86,6 +95,13 @@ export default NextAuth({
           clientSecret: process.env.AUTH0_SECRET,
           issuer: process.env.AUTH0_ISSUER,
         })
+      : [],
+    process.env.KEYCLOAK_ID && process.env.KEYCLOAK_SECRET && process.env.KEYCLOAK_ISSUER
+      ? KeycloakProvider({
+        clientId: process.env.KEYCLOAK_ID,
+        clientSecret: process.env.KEYCLOAK_SECRET,
+        issuer: process.env.KEYCLOAK_ISSUER,
+      })
       : [],
     process.env.local_username && process.env.local_password
       ? CredentialsProvider({
